@@ -15,7 +15,7 @@ import fsps as sps
 def setIMF(imfFile):
     SPS_HOME = os.getenv('SPS_HOME')
     imfPath = os.path.join(SPS_HOME, "data") #fsps install directory /data
-    shutil.copyfile(imfPath+"/"+imfFile,imfPath+"/imf.dat")
+    shutil.copyfile("imf_8-60k/"+imfFile,imfPath+"/imf.dat")
 
 filterFuncs = []
 
