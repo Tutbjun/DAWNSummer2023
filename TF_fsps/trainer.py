@@ -3,6 +3,7 @@
 import numpy as np
 import os
 from fspsCore import blackbox
+import time
 
 
 settingSet = {
@@ -66,7 +67,10 @@ for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
         if i % 10 == 0:
             np.save("Ys.npy", Ys)
         print("Xs left: ", len(Xs)-len(Ys))
-    np.save("Ys.npy", Ys)
+    np.save(file="Xs_{time.time()}.npy", arr=Xs)
+    np.save(file="Ys_{time.time()}.npy", arr=Ys)
+    os.remove("Xs.npy")
+    os.remove("Ys.npy")
 
     #train tensorflow to get from in set to out set
     
