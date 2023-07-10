@@ -43,9 +43,11 @@ for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
     sample2Pick = np.arange(sampleCnt)
     
     for i in range(sampleCnt):
-        j = np.random.choice(sample2Pick)
         for l,k in enumerate(list(settingSet.keys())[:varCount]):
+            j = np.random.choice(sample2Pick)
             Xs[i][l] = settingSamples[l][j]
+            settingSamples[l] = np.delete(settingSamples[l], j)
+        sample2Pick = sample2Pick[:-1]
         for l,k in enumerate(list(settingSet.keys())[varCount:]):
             Xs[i][l+varCount] = settingSet[k][0] + (settingSet[k][1] - settingSet[k][0])/2
         delIndex = np.where(sample2Pick == j)
