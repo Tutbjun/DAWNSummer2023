@@ -58,13 +58,14 @@ for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
     #and for every 10 samples save the data
     np.save("Xs.npy", Xs)
     if "Ys.npy" in os.listdir("."):
-        Ys = np.load("Ys.npy")
+        Ys = list(np.load("Ys.npy"))
     else:
         Ys = []
     for i,X in enumerate(Xs[len(Ys):]):
         Ys.append(blackbox(X))
         if i % 10 == 0:
             np.save("Ys.npy", Ys)
+        print("Xs left: ", len(Xs)-len(Ys))
     np.save("Ys.npy", Ys)
 
     #train tensorflow to get from in set to out set
