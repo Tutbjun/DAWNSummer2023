@@ -3,6 +3,7 @@
 import numpy as np
 import os
 from fspsCore import blackbox
+from fspsCore import filterFuncs
 import time
 import multiprocessing as mp
 
@@ -58,22 +59,24 @@ for varCount in list(range(initialVarCount, len(settingSet))):
     #run filterset on spectre
     #and for every 10 samples save the data
     np.save("Xs.npy", Xs)
-    Ys = [[] for i in range(len(Xs))]
     if 'Ys.npy' in os.listdir():
         Ys = list(np.load("Ys.npy"))
+    else:
+        Ys = [np.full(len(filterFuncs), np.nan) for i in range(len(Xs))]
         
     #!multiprocessing
     def mp_worker(inputs):
         #print(mp.current_process().name)
         threadID = int(mp.current_process().name.split("-")[-1])-1
         X, i = inputs#unpack
-        if len(Ys[i]) > 0: return
+        if np.isnan(Ys[i][0]): pass
+        else: return
         print("working on sample ", sampleCnt-i, "...")
         #print("i = ", i, "X = ", X)
         Ys[i] = blackbox(X, threadID)
         #print("i = ", i, "threadID = ", threadID)
         if i % 10 == 0 and threadID == 0:
-            np.save(file="Ys.npy", arr=Ys)
+            np.save(file="Ys.npy", arr=np.asarray(Ys))
 
         
     pool = mp.Pool(processes=8)
