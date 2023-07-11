@@ -22,8 +22,8 @@ import fsps5 as sps5
 import fsps6 as sps6
 import fsps7 as sps7
 
-def setIMF(imfFile):
-    SPS_HOME = os.getenv('SPS_HOME')
+def setIMF(imfFile,threadNum=0):
+    SPS_HOME = os.getenv(f'SPS{threadNum}_HOME')
     imfPath = os.path.join(SPS_HOME, "data") #fsps install directory /data
     shutil.copyfile("imf_8-60k/"+imfFile,imfPath+"/imf.dat")
 
