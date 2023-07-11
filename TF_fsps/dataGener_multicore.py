@@ -31,7 +31,7 @@ settingSet = {
 #improve model by adding more parameters one by one
 
 #asume the ussage of a sample method where the samplecount is the same as the axis fidelity
-sampleCnt = 10000
+sampleCnt = 20000
 
 initialVarCount = 3
 for varCount in list(range(initialVarCount, len(settingSet))):
@@ -61,15 +61,16 @@ for varCount in list(range(initialVarCount, len(settingSet))):
     Ys = [[] for i in range(len(Xs))]
     #!multiprocessing
     def mp_worker(inputs):
-        print(mp.current_process().name)
+        #print(mp.current_process().name)
         threadID = int(mp.current_process().name.split("-")[-1])-1
         X, i = inputs#unpack
-        print("i = ", i, "X = ", X)
+        print("working on sample ", sampleCnt-i, "...")
+        #print("i = ", i, "X = ", X)
         Ys[i] = blackbox(X, threadID)
-        print("i = ", i, "threadID = ", threadID)
+        #print("i = ", i, "threadID = ", threadID)
 
         
-    pool = mp.Pool(processes=2)
+    pool = mp.Pool(processes=8)
     X4pool = zip(Xs, range(len(Xs)))
     
     pool.map(mp_worker, X4pool)

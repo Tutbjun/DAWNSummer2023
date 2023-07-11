@@ -15,7 +15,12 @@ import shutil
 #StellarPopulation
 import fsps0 as sps0
 import fsps1 as sps1
-
+import fsps2 as sps2
+import fsps3 as sps3
+import fsps4 as sps4
+import fsps5 as sps5
+import fsps6 as sps6
+import fsps7 as sps7
 
 def setIMF(imfFile):
     SPS_HOME = os.getenv('SPS_HOME')
