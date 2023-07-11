@@ -33,8 +33,9 @@ settingSet = {
 sampleCnt = 10000
 
 initialVarCount = 3
-for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
-    print("training with " + str(varCount) + " variables")
+for varCount in list(range(initialVarCount, len(settingSet))):
+    if varCount > initialVarCount: raise NotImplementedError("not implemented yet")
+    print("gening " + str(varCount) + "dimensions of variables")
     #create random sample of parameters
     settingSamples = []
     for k in list(settingSet.keys())[:varCount]:
@@ -65,12 +66,7 @@ for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
         if i % 10 == 0:
             np.save("Ys.npy", Ys)
         print("Xs left: ", len(Xs)-len(Ys))
-    np.save(file="Xs_{time.time()}.npy", arr=Xs)
-    np.save(file="Ys_{time.time()}.npy", arr=Ys)
+    np.save(file="Xs_stage{varCount}_{time.time()}.npy", arr=Xs)
+    np.save(file="Ys_stage{varCount}_{time.time()}.npy", arr=Ys)
     os.remove("Xs.npy")
     os.remove("Ys.npy")
-
-    #train tensorflow to get from in set to out set
-    
-
-
