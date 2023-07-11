@@ -51,8 +51,6 @@ for varCount in list(range(initialVarCount, len(settingSet)))[:1]:
         sample2Pick = sample2Pick[:-1]
         for l,k in enumerate(list(settingSet.keys())[varCount:]):
             Xs[i][l+varCount] = settingSet[k][0] + (settingSet[k][1] - settingSet[k][0])/2
-        delIndex = np.where(sample2Pick == j)
-        sample2Pick = np.delete(sample2Pick, delIndex)
 
     #run fsps model for each sample
     #run filterset on spectre
