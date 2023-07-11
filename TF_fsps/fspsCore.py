@@ -8,9 +8,14 @@ import shutil
 #from dust_extinction.parameter_averages import F04
 #shutil.rmtree(matplotlib.get_cachedir())
 #import csv
-import fsps as sps
+#import fsps as sps
 #from copy import copy
 #import timeit
+#from fsps import StellarPopulation
+#StellarPopulation
+import fsps0 as sps0
+import fsps1 as sps1
+
 
 def setIMF(imfFile):
     SPS_HOME = os.getenv('SPS_HOME')
@@ -72,7 +77,8 @@ def performFilter(spec):
     #https://jwst-docs.stsci.edu/jwst-near-infrared-camera/nircam-instrumentation/nircam-filters
 
 def blackbox(X,threadNum=0):
-
+    localSps = eval("sps"+str(threadNum))
+    print("thread",threadNum,"started")
     # X is a list of input parameters to put into fsps, that thereby generates a spectrum
     # this is then fed through a set of filters
 
@@ -85,7 +91,7 @@ def blackbox(X,threadNum=0):
 
     imfFile = "imf"+str(IMFtemp)+".dat"
     setIMF(imfFile)
-    sp = sps.StellarPopulation(
+    sp = localSps.StellarPopulation(
         sfh=4,
         compute_vega_mags=False,
         logzsol=Z,
@@ -108,5 +114,6 @@ def blackbox(X,threadNum=0):
     spec = sp.get_spectrum(tage=tage, peraa=True)
     #spec[0] is wavelength, spec[1] is flux
     Y = performFilter(spec)
+    print("thread",threadNum,"finished")
 
     return Y
